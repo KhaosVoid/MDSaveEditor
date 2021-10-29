@@ -3,6 +3,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Authors>Zach "KhaosVoid" Tommey</Authors>
+    <Product>Metroid Dread Save Editor</Product>
+    <Description>Save Editor that currently supports modifying the player inventory.</Description>
+    <Copyright>Zach "KhaosVoid" Tommey - Copyright 2021</Copyright>
+    <Version>2021.10.29.0</Version>
+    <AssemblyVersion>2021.10.29.0</AssemblyVersion>
+    <FileVersion>2021.10.29.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BMSSV.IO" Version="2021.10.26" />
