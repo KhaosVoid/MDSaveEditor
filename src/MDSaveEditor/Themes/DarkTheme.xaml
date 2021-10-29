@@ -1,0 +1,75 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--#region *** Common Brushes *** -->
+
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.BackgroundBrush" Color="#FF333333" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.ForegroundBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Control.BackgroundBrush" Color="#FF444444" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Control.BorderBrush" Color="#FF666666" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Control.DisabledBrush" Color="#FF999999" />
+
+    <!--#endregion *** Common Brushes *** -->
+
+    <!--#region *** Button Brushes *** -->
+
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Button.BackgroundBrush" Color="#FF5E5E5E" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Button.HoverBackgroundBrush" Color="#FF777777" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Button.PressedBackgroundBrush" Color="#FF999999" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Button.DisabledBackgroundBrush" Color="#FF5A5A5A" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Button.BorderBrush" Color="#FF777777" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.Button.PressedForegroundBrush" Color="#FF000000" />
+
+    <!--#endregion *** Button Brushes *** -->
+
+    <!--#region *** CheckBox Brushes *** -->
+
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.CheckBox.HoverBackgroundBrush" Color="#FF666666" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.CheckBox.HoverBorderBrush" Color="#FF888888" />
+
+    <!--#endregion *** CheckBox Brushes *** -->
+
+    <!--#region *** DataGrid Brushes *** -->
+
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.DataGrid.HoverBackgroundBrush" Color="#FF999999" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.DataGrid.SelectedBackgroundBrush" Color="#FF777777" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.DataGrid.ColumnHeader.BackgroundBrush" Color="#FF5E5E5E" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.DataGrid.ColumnGripper.DarkBrush" Color="#FF333333" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.DataGrid.ColumnGripper.LightBrush" Color="#FF999999" />
+
+    <!--#endregion *** DataGrid Brushes *** -->
+
+    <!--#region *** GroupBox Brushes *** -->
+
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.GroupBox.Header.BackgroundBrush" Color="#FF515151" />
+
+    <!--#endregion *** GroupBox Brushes *** -->
+
+    <!--#region *** RadioButton Brushes *** -->
+
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.RadioButton.HoverBackgroundBrush" Color="#FF666666" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.RadioButton.HoverBorderBrush" Color="#FF888888" />
+
+    <!--#endregion *** RadioButton Brushes *** -->
+
+    <!--#region *** TabItem Brushes *** -->
+
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TabItem.BackgroundBrush" Color="#FF5E5E5E" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TabItem.HoverBackgroundBrush" Color="#FF777777" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TabItem.PressedBackgroundBrush" Color="#FF999999" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TabItem.DisabledBackgroundBrush" Color="#FF5A5A5A" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TabItem.BorderBrush" Color="#FF777777" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TabItem.PressedForegroundBrush" Color="#FF000000" />
+
+    <!--#endregion *** TabItem Brushes *** -->
+
+    <!--#region *** TextBox Brushes *** -->
+
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TextBox.HoverBackgroundBrush" Color="#FF666666" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TextBox.HoverBorderBrush" Color="#FF888888" />
+    <SolidColorBrush x:Key="MDSaveEditor.Theme.TextBox.ErrorBorderBrush" Color="#FFFF0000" />
+
+    <!--#endregion *** TextBox Brushes *** -->
+
+</ResourceDictionary>

@@ -1,0 +1,100 @@
+name: Dev CI
+
+on:
+  push:
+    branches:
+      - dev
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.yml'
+      - '**/*.ps1'
+  workflow_dispatch:
+    branches:
+      - dev
+
+jobs:
+
+  build:
+    if: "!contains(github.event.head_commit.message, '*** NO_CI ***')"
+    strategy:
+      matrix:
+        configuration: [Debug]
+
+    runs-on: windows-latest
+
+    env:
+      Source_Directory: .\src
+      Project_Directory: .\src\MDSaveEditor
+      Project_Path: src\MDSaveEditor\MDSaveEditor.csproj
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      DOTNET_NOLOGO: true
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # Install the .NET 5.0.x workload
+    - name: Install .NET 5.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    # Update Project Assembly Information
+    - name: Update Project Assembly Information
+      id: updateNfo_MDSaveEditor
+      shell: powershell
+      run: 
+        $prevVer = `
+          .\UpdateCSProjAssyVer.ps1 `
+            -CSProjPath:"${{ env.Project_Path }}" `
+            -Silent `
+            -GetVersion;
+        echo "::set-output name=prevVersion::$prevVer"; `
+        .\UpdateCSProjAssyVer.ps1 `
+          -CSProjPath:"${{ env.Project_Path }}" `
+          -Authors:"Zach `"KhaosVoid`" Tommey" `
+          -Product:"Metroid Dread Save Editor" `
+          -Description:"Save Editor that currently supports modifying the player inventory." `
+          -Copyright:"Zach `"KhaosVoid`" Tommey - Copyright" `
+          -AppendCopyrightYear; `
+        $curVer = `
+          .\UpdateCSProjAssyVer.ps1 `
+            -CSProjPath:"${{ env.Project_Path }}" `
+            -Silent `
+            -GetVersion;
+        echo "::set-output name=currentVersion::$curVer"
+
+    # Restore
+    - name: Restore
+      working-directory: ${{ env.Source_Directory }}
+      run: dotnet restore --nologo --verbosity quiet
+
+    # Build
+    - name: Build
+      working-directory: ${{ env.Source_Directory }}
+      run: dotnet build --configuration $env:Configuration --no-restore --nologo --verbosity quiet
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    # Test
+    - name: Test
+      working-directory: ${{ env.Source_Directory }}
+      run: dotnet test --no-restore --nologo --verbosity quiet
+
+    # Commit Updated Assembly Information (NO_CI)
+    - name: Commit Updated Assembly Information *** NO_CI ***
+      shell: powershell
+      run:
+        $previousVer = "${{ steps.updateNfo_MDSaveEditor.outputs.prevVersion }}"; `
+        $currentVer = "${{ steps.updateNfo_MDSaveEditor.outputs.currentVersion }}"; `
+        $commitMessage = "*** NO_CI *** Updated Assembly Info "; `
+        if ($previousVer -eq "0.0.0.0") { $commitMessage += "([$currentVer])" } `
+        else { $commitMessage += "([$previousVer] => [$currentVer])" } `
+        git config user.name github-actions; `
+        git config user.email github-actions@github.com; `
+        git add .; `
+        git commit -m "$commitMessage"; `
+        git push
