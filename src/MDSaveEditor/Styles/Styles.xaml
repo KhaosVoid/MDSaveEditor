@@ -1,0 +1,14 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/MDSaveEditor;component/Styles/ButtonStyle.xaml" />
+        <ResourceDictionary Source="/MDSaveEditor;component/Styles/CheckBoxStyle.xaml" />
+        <ResourceDictionary Source="/MDSaveEditor;component/Styles/ComboBoxStyle.xaml" />
+        <ResourceDictionary Source="/MDSaveEditor;component/Styles/GroupBoxStyle.xaml" />
+        <ResourceDictionary Source="/MDSaveEditor;component/Styles/RadioButtonStyle.xaml" />
+        <ResourceDictionary Source="/MDSaveEditor;component/Styles/TextBoxStyle.xaml" />
+
+        <ResourceDictionary Source="/MDSaveEditor;component/Themes/DarkTheme.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

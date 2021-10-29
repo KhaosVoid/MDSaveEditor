@@ -1,0 +1,112 @@
+name: Main CD
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.yml'
+      - '**/*.ps1'
+  workflow_dispatch:
+    branches:
+      - main
+
+jobs:
+
+  build:
+    strategy:
+      matrix:
+        configuration: [Release]
+
+    runs-on: windows-latest
+
+    env:
+      Source_Directory: .\src
+      Project_Directory: .\MDSaveEditor
+      Project_Path: src\MDSaveEditor\MDSaveEditor.csproj
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      DOTNET_NOLOGO: true
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # Install the .NET 5.0.x workload
+    - name: Install .NET 5.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    
+    # Get Assembly Version
+    - name: Get Assembly Version
+      id: get_assembly_version
+      shell: powershell
+      run:
+        $curVer = `
+          .\UpdateCSProjAssyVer.ps1 `
+            -CSProjPath:"${{ env.Project_Path }}" `
+            -Silent `
+            -GetVersion;
+        echo "::set-output name=currentVersion::$curVer"
+
+    # Restore
+    - name: Restore
+      working-directory: ${{ env.Source_Directory }}
+      run: dotnet restore --nologo --verbosity quiet
+
+    # Build
+    - name: Build
+      working-directory: ${{ env.Source_Directory }}
+      run: dotnet build --configuration $env:Configuration --no-restore --nologo --verbosity quiet
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    # Test
+    - name: Test
+      working-directory: ${{ env.Source_Directory }}
+      run: dotnet test --no-restore --nologo --verbosity quiet
+      
+    # Publish
+    - name: Publish
+      working-directory: ${{ env.Source_Directory }}
+      run: dotnet publish --runtime win-x64 --configuration $env:Configuration -p:PublishSingleFile=true --self-contained false --nologo --verbosity quiet
+      env:
+        Configuration: ${{ matrix.configuration }}
+        
+    # Get Published Exe Path
+    - name: Get Published Exe Path
+      id: get_published_exe_path
+      shell: powershell
+      working-directory: ${{ env.Source_Directory }}${{ env.Project_Directory }}
+      run:
+        cd bin\${{ matrix.configuration }}\net5.*-windows\win-x64\publish; `
+        $searchString = "$pwd" + ":*.exe"; `
+        $publishedExePath = where.exe "$searchString"; `
+        echo "::set-output name=publishedExePath::$publishedExePath"
+        
+    # Create Release
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.get_assembly_version.outputs.currentVersion }}
+        release_name: Release v${{ steps.get_assembly_version.outputs.currentVersion }}
+        draft: true
+        prerelease: false
+    
+    # Upload Artifact
+    - name: Upload Artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ steps.get_published_exe_path.outputs.publishedExePath }}
+        asset_name: MetroidDreadSaveEditor.exe
+        asset_content_type: application/octet-stream

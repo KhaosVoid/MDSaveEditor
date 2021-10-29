@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BMSSV.IO" Version="2021.10.26" />
+    <PackageReference Include="Excalibur.Wpf.Core.NET" Version="2021.10.28" />
+  </ItemGroup>
+</Project>
