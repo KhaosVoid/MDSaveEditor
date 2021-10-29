@@ -66,6 +66,11 @@ jobs:
             -Silent `
             -GetVersion;
         echo "::set-output name=currentVersion::$curVer"
+        
+    # Apply NuGet Source (Main Registry)
+    - name: Apply NuGet Source
+      working-directory: ${{ env.Source_Directory }}
+      run: dotnet nuget add source "https://nuget.pkg.github.com/KhaosVoid/index.json" --name "github" --username "KhaosVoid" --password "${{ secrets.GITHUB_TOKEN }}"
 
     # Restore
     - name: Restore
